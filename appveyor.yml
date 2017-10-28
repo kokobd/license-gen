@@ -22,11 +22,10 @@ test_script:
 before_deploy:
 - ps: $appPath = ./stack.exe --arch i386 path --local-install-root
 - ps: $appPath = "${appPath}\bin"
-- ps: $packagePath = "license-gen-${APPVEYOR_BUILD_VERSION}.zip"
-- ps: 7z a "$packagePath" "${appPath}\*.dll"
+- ps: 7z a license-gen-${APPVEYOR_BUILD_VERSION}.zip "${appPath}\*.dll"
 
 artifacts:
-  - path: "${packagePath}"
+  - path: license-gen-${APPVEYOR_BUILD_VERSION}.zip
     name: license-gen
 
 deploy:
@@ -36,5 +35,5 @@ deploy:
   username: sftp
   password:
     secure: A5H1VsmjLKBx6FqP0jhhYqm7CLeSaCGGM4TnCLZTGig=
-  folder: license-gen/archieve
+  folder: license-gen/archive
   artifact: license-gen
