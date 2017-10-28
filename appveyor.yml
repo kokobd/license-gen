@@ -12,9 +12,29 @@ install:
 
     7z x stack.zip stack.exe
 
-    stack --no-terminal --install-ghc test --only-dependencies
+    stack --no-terminal --install-ghc --arch i386 test --only-dependencies
 
 cache: C:\sr\
 build: off
 test_script:
-- cmd: stack --no-terminal test --haddock --no-haddock-deps --flag license-haskell:production
+- cmd: stack --no-terminal --arch i386 test --haddock --no-haddock-deps --flag license-haskell:production
+
+before_deploy:
+- SET APP_PATH=stack --arch i386 path --local-install-root
+- SET APP_PATH=%APP_PATH%\bin
+- SET PACKAGE_PATH=license-gen-%APPVEYOR_BUILD_VERSION%.zip
+- 7z a %PACKAGE_PATH% %APP_PATH%\*.dll
+
+artifact:
+  - path: %PACKAGE_PATH%
+    name: license-gen
+
+deploy:
+  provider: FTP
+  protocol: ftps
+  host: 39.108.64.177
+  username: sftp
+  password:
+    secure: A5H1VsmjLKBx6FqP0jhhYqm7CLeSaCGGM4TnCLZTGig=
+  folder: license-gen/archieve
+  artifact: license-gen
