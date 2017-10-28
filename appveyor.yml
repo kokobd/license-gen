@@ -20,13 +20,13 @@ test_script:
 - cmd: stack --no-terminal --arch i386 test --haddock --no-haddock-deps --flag license-haskell:production
 
 before_deploy:
-- SET APP_PATH=stack --arch i386 path --local-install-root
-- SET APP_PATH="%APP_PATH%\bin"
-- SET PACKAGE_PATH="license-gen-%APPVEYOR_BUILD_VERSION%.zip"
-- 7z a "%PACKAGE_PATH%" "%APP_PATH%\*.dll"
+- ps: $appPath = stack --arch i386 path --local-install-root
+- ps: $appPath = "${appPath}\bin"
+- ps: $packagePath = "license-gen-${APPVEYOR_BUILD_VERSION}.zip"
+- ps: 7z a "$packagePath" "${appPath}\*.dll"
 
 artifacts:
-  - path: "%PACKAGE_PATH%"
+  - path: "${packagePath}"
     name: license-gen
 
 deploy:
