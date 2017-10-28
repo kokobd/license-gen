@@ -21,7 +21,7 @@ test_script:
 after_test:
 - ps: $appPath = ./stack.exe --arch i386 path --local-install-root
 - ps: $appPath = "${appPath}\bin"
-- ps: 7z a license-gen-${APPVEYOR_BUILD_VERSION}.zip "${appPath}\*.dll"
+- ps: 7z a license-gen-${env:APPVEYOR_BUILD_VERSION}.zip "${appPath}\*.dll"
 
 artifacts:
   - path: license-gen-${APPVEYOR_BUILD_VERSION}.zip
