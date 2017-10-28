@@ -1,0 +1,4 @@
+.git/
+.stack-work/
+.stack-work-*/
+*.prof

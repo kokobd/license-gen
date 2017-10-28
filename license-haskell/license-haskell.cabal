@@ -1,0 +1,60 @@
+name:                license-haskell
+version:             0.1.0.0
+-- synopsis:
+-- description:
+license:             AllRightsReserved
+license-file:        LICENSE
+author:              Zelin Feng
+maintainer:          fzl@linux.com
+copyright:           All Rights Reserved
+build-type:          Simple
+cabal-version:       >=1.10
+extra-source-files:  config/cipher.cfg
+
+flag production
+  default: False
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     JiaHe.LM.License
+                       JiaHe.LM.Internal.Cipher
+                       JiaHe.LM.Internal.LicenseImpl
+                       JiaHe.LM.Internal.Environment
+  build-depends:       base >= 4.7 && < 5
+                     , cipher-aes
+                     , bytestring
+                     , digest
+                     , text
+                     , time
+                     , MissingH
+                     , aeson
+                     , template-haskell
+                     , configurator
+  ghc-options:         -Wall
+  if flag(production)
+    cpp-options:       -DPRODUCTION
+  default-language:    Haskell2010
+
+test-suite license-haskell-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test/unit
+  main-is:             Spec.hs
+  other-modules:       JiaHe.LM.Test.CipherSpec
+                     , JiaHe.LM.Test.LicenseSpec
+  build-depends:       base
+                     , license-haskell
+                     , hspec
+                     , QuickCheck
+                     , checkers
+                     , bytestring
+                     , text
+                     , bytestring-arbitrary
+                     , time
+                     , aeson
+                     , raw-strings-qq
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/zelinf/license-manager

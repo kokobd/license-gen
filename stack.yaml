@@ -1,0 +1,11 @@
+resolver: lts-6.35
+packages:
+- ./license-haskell
+- ./license-app
+# - ./license-dll
+
+extra-deps: [
+  bytestring-arbitrary-0.1.1
+  ]
+flags: {}
+extra-package-dbs: []

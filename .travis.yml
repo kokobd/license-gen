@@ -1,0 +1,21 @@
+sudo: false
+language: generic
+cache:
+  directories:
+  - "$HOME/.stack"
+addons:
+  apt:
+    packages:
+    - libgmp-dev
+before_install:
+- mkdir -p ~/.local/bin
+- export PATH=$HOME/.local/bin:$PATH
+- travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards
+  --strip-components=1 -C ~/.local/bin '*/stack'
+install:
+- stack --no-terminal --install-ghc test --only-dependencies
+script:
+- stack --no-terminal test --haddock --no-haddock-deps --flag license-haskell:production
+env:
+  global:
+  - secure: NZLrmzidSI08CJ721R/4TLjPKnmuRF6lcb+hpqzrZii3gvzQJ4G3jMYAHNAJzuI8uuxY5akUOgzjV8wqMSb5JWg+6YOzN5nOXcnkCGMbzt+HTkWt/Gr7fp8J3VjDjxa5WRaBw+dy5/G4iPhWVjEKQmGpzoTrntGdrJTU1PtMoJ8oNx1P6YkEE6MFryVj2jJ/4qZzcEz8axmQikZfimeoSURqLftJBMsTj7Q6BayNy5r9nPUzXjFC1BKcWlUYwtK/QJwau1DgxEj99J4h/qE1ug1ZPu67vaCqdiXMHOE/ltXH1QnK2ePp0V+kKt1cLteGwcUbZ+PydesJmWisp6ANGlPpYihozlPlxC3L2SVCU/Q4P0BPjjpnEaCMdro76yfmlejieSqPu2kxpHhqfQu1/C+WKZNeB0DHa8mOq8jWzrG6npYwmCICKcdzEdXKoUcoIL0a3LLjGgjp/L8IoLcr5J66iNvmB5+/XZgZOcMyVuaGIv1iGko8SIVIDX+QTctgAVmm6K7lrlaZzgW9Eh5N/1vmMRNb8w0Wzm6w7lv3osp9e2gYo7ME0eTkvxOsDh5nXV8VqEOXh0/1iHGLkz3+LWNmEpoKmyh1+QSgaFkhnvDxQgUTTToRetRqPwIHua8y7FXLSVKuQ4dQx66rStbVuA0LV8PY1FnwFsM2Vd/vTdc=

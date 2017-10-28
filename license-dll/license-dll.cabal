@@ -1,0 +1,36 @@
+name:                license-dll
+version:             0.1.0.0
+-- synopsis:
+-- description:
+license:             AllRightsReserved
+-- license-file:        LICENSE
+author:              Zelin Feng
+maintainer:          fzl@linux.com
+copyright:           All Rights Reserved
+build-type:          Simple
+cabal-version:       >=2.0
+
+foreign-library license-dynamic
+  type:                native-shared
+
+  if os(Windows)
+    options:           standalone
+    -- mod-def-file:      LicenseDLL.def
+  hs-source-dirs:      export
+  c-sources:           csrc/StartEnd.c
+  other-modules:       Export
+  build-depends:       base >=4.7 && < 5.0
+                     , license-dll
+  default-language:    Haskell2010
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     JiaHe.LM.Foreign
+  other-modules:       JiaHe.LM.Serialize
+  build-depends:       base >= 4 && < 5
+                     , license-haskell
+                     , aeson
+                     , bytestring
+                     , unordered-containers
+  ghc-options:         -Wall
+  default-language:    Haskell2010
