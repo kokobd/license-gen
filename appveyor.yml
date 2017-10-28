@@ -12,14 +12,13 @@ install:
 
     7z x stack.zip stack.exe
 
-    stack --no-terminal --install-ghc --arch i386 test --only-dependencies
+    stack --no-terminal --silent --install-ghc --arch i386 test --only-dependencies
 
-cache: C:\sr\
 build: off
 test_script:
 - cmd: stack --no-terminal --arch i386 test --haddock --no-haddock-deps --flag license-haskell:production
 
-before_deploy:
+after_test:
 - ps: $appPath = ./stack.exe --arch i386 path --local-install-root
 - ps: $appPath = "${appPath}\bin"
 - ps: 7z a license-gen-${APPVEYOR_BUILD_VERSION}.zip "${appPath}\*.dll"
