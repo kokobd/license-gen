@@ -1,0 +1,20 @@
+version: 0.1.{build}
+image: Visual Studio 2015
+environment:
+  STACK_ROOT: C:\sr\
+  IV:
+    secure: au7xZlSNdoqtLzQn+p5NQ4jf3yRtivPT8fJMAmY2wHK37keC3zh1YBjDOD1dHcQ4SStN82XDWux5FCkqW+R1Vg==
+install:
+- cmd: >-
+    set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
+
+    curl -sS -ostack.zip -L --insecure http://www.stackage.org/stack/windows-i386
+
+    7z x stack.zip stack.exe
+
+    stack --no-terminal --install-ghc test --only-dependencies
+
+cache: C:\sr\
+build: off
+test_script:
+- cmd: stack --no-terminal test --haddock --no-haddock-deps --flag license-haskell:production

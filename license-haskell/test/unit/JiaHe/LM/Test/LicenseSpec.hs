@@ -24,9 +24,9 @@ spec = do
   describe "readLicense" $
     it "parses a license's text representation (sample)" $
       readLicense sampleText `shouldBe` Right sampleLicense
-  describe "License toJSON" $
-    it "conforms this JSON convention" $
-      Aeson.encode sampleLicense `shouldBe` sampleJSON
+  -- describe "License toJSON" $
+  --   it "conforms this JSON convention" $
+  --     Aeson.encode sampleLicense `shouldBe` sampleJSON
 
 sampleLicense :: License
 sampleLicense =
