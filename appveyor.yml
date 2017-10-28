@@ -25,7 +25,7 @@ before_deploy:
 - SET PACKAGE_PATH="license-gen-%APPVEYOR_BUILD_VERSION%.zip"
 - 7z a "%PACKAGE_PATH%" "%APP_PATH%\*.dll"
 
-artifact:
+artifacts:
   - path: "%PACKAGE_PATH%"
     name: license-gen
 
