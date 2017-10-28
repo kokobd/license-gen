@@ -20,7 +20,7 @@ test_script:
 - cmd: stack --no-terminal --arch i386 test --haddock --no-haddock-deps --flag license-haskell:production
 
 before_deploy:
-- ps: $appPath = stack --arch i386 path --local-install-root
+- ps: $appPath = ./stack.exe --arch i386 path --local-install-root
 - ps: $appPath = "${appPath}\bin"
 - ps: $packagePath = "license-gen-${APPVEYOR_BUILD_VERSION}.zip"
 - ps: 7z a "$packagePath" "${appPath}\*.dll"
