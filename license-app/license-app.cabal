@@ -1,12 +1,11 @@
 name:                license-app
-version:             0.1.0.0
--- synopsis:
--- description:
-license:             AllRightsReserved
-license-file:        LICENSE
+version:             0.1
+synopsis:            Executables for license-haskell
+license:             MIT
+license-file:        ../LICENSE
 author:              Zelin Feng
-maintainer:          fzl@linux.com
-copyright:           All Rights Reserved
+maintainer:          fengzlin@mail2.sysu.edu.cn
+copyright:           (c) 2017 JiaHe Software Inc.
 build-type:          Simple
 cabal-version:       >=1.10
 
