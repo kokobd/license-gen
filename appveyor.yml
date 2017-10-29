@@ -10,10 +10,6 @@ install:
 - cmd: >-
     set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
 
-    echo "Decrypted Key: --------------"
-
-    echo %SFTP_DEC_KEY%
-
     curl -sS -ostack.zip -L --insecure http://www.stackage.org/stack/windows-i386
 
     7z x stack.zip stack.exe
