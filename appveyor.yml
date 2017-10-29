@@ -9,10 +9,13 @@ environment:
 install:
 - cmd: >-
     set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
+
     curl -sS -ostack.zip -L --insecure http://www.stackage.org/stack/windows-i386
+    
     7z x stack.zip stack.exe
 
     stack --no-terminal --arch i386 setup >$null 2>&1
+
     stack --no-terminal --silent --install-ghc --arch i386 test --only-dependencies
 
 build: off
