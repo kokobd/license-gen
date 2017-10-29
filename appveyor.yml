@@ -11,7 +11,7 @@ install:
     set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
 
     curl -sS -ostack.zip -L --insecure http://www.stackage.org/stack/windows-i386
-    
+
     7z x stack.zip stack.exe
 
     stack --no-terminal --arch i386 setup >$null 2>&1
@@ -32,7 +32,7 @@ artifacts:
     name: license-gen
 
 before_deploy:
-- ps: stack scripts/DecryptFile.hs ${env:SFTP_DEC_KEY} deployment/gcloud_sftp.enc
+- ps: ./stack.exe scripts/DecryptFile.hs ${env:SFTP_DEC_KEY} deployment/gcloud_sftp.enc
 
 deploy_script:
 - ps: sftp -i deployment/gcloud_sftp -b scripts/sftp_batch sftp@35.202.246.94
