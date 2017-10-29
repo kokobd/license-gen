@@ -2,3 +2,4 @@
 .stack-work/
 .stack-work-*/
 *.prof
+deployment/gcloud_sftp

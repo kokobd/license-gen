@@ -4,14 +4,15 @@ environment:
   STACK_ROOT: C:\sr\
   IV:
     secure: au7xZlSNdoqtLzQn+p5NQ4jf3yRtivPT8fJMAmY2wHK37keC3zh1YBjDOD1dHcQ4SStN82XDWux5FCkqW+R1Vg==
+  SFTP_DEC_KEY:
+    secure: lV0BeKW2ErN37Wx+hXild21jtumVpJ6HmzUyYKi3kcXAJLe/UQ5APd5O3QsDAyUF
 install:
 - cmd: >-
     set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
-
     curl -sS -ostack.zip -L --insecure http://www.stackage.org/stack/windows-i386
-
     7z x stack.zip stack.exe
 
+    stack --no-terminal --arch i386 setup >$null 2>&1
     stack --no-terminal --silent --install-ghc --arch i386 test --only-dependencies
 
 build: off
@@ -21,18 +22,14 @@ test_script:
 after_test:
 - ps: $appPath = ./stack.exe --arch i386 path --local-install-root
 - ps: $appPath = "${appPath}\bin"
-- ps: 7z a license-gen-${env:APPVEYOR_BUILD_VERSION}.zip "${appPath}\*.dll"
+- ps: 7z a license-gen-${env:APPVEYOR_BUILD_VERSION}.zip "${appPath}\*.exe"
 
 artifacts:
   - path: license-gen-${APPVEYOR_BUILD_VERSION}.zip
     name: license-gen
 
-deploy:
-  provider: FTP
-  protocol: ftps
-  host: 39.108.64.177
-  username: sftp
-  password:
-    secure: A5H1VsmjLKBx6FqP0jhhYqm7CLeSaCGGM4TnCLZTGig=
-  folder: license-gen/archive
-  artifact: license-gen
+before_deploy:
+- ps: stack scripts/DecryptFile.hs ${env:SFTP_DEC_KEY} deployment/gcloud_sftp.enc
+
+deploy_script:
+- ps: sftp -i deployment/gcloud_sftp -b scripts/sftp_batch sftp@35.202.246.94
