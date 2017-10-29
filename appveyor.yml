@@ -20,7 +20,7 @@ install:
 
 build: off
 test_script:
-- cmd: stack --no-terminal --arch i386 test --haddock --no-haddock-deps --flag license-haskell:production
+- cmd: stack --no-terminal --arch i386 test --flag license-haskell:production
 
 after_test:
 - ps: $appPath = ./stack.exe --arch i386 path --local-install-root
@@ -32,7 +32,7 @@ artifacts:
     name: license-gen
 
 before_deploy:
-- ps: ./stack.exe scripts/DecryptFile.hs ${env:SFTP_DEC_KEY} deployment/gcloud_sftp.enc
+- ps: ./stack.exe --arch i386 scripts/DecryptFile.hs ${env:SFTP_DEC_KEY} deployment/gcloud_sftp.enc
 
 deploy_script:
 - ps: sftp -i deployment/gcloud_sftp -b scripts/sftp_batch -o UserKnownHostsFile=deployment/known_hosts sftp@35.202.246.94
