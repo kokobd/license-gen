@@ -1,7 +1,9 @@
 # license-gen - A simple license generator
 
 Build Status
+
 |Platform|Status|
+|:-:|:-:|
 |Travis CI|![master-status](https://travis-ci.org/zelinf/license-gen.svg?branch=master)|
 |AppVeyor|![master-status](https://ci.appveyor.com/api/projects/status/github/zelinf/license-gen)|
 
