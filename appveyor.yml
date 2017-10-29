@@ -10,6 +10,10 @@ install:
 - cmd: >-
     set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
 
+    echo "Decrypted Key: --------------"
+
+    echo %SFTP_DEC_KEY%
+
     curl -sS -ostack.zip -L --insecure http://www.stackage.org/stack/windows-i386
 
     7z x stack.zip stack.exe
@@ -35,4 +39,4 @@ before_deploy:
 - ps: ./stack.exe scripts/DecryptFile.hs ${env:SFTP_DEC_KEY} deployment/gcloud_sftp.enc
 
 deploy_script:
-- ps: sftp -i deployment/gcloud_sftp -b scripts/sftp_batch sftp@35.202.246.94
+- ps: sftp -i deployment/gcloud_sftp -b scripts/sftp_batch -o UserKnownHostsFile=deployment/known_hosts sftp@35.202.246.94
